@@ -17,13 +17,13 @@
 } */
 
 :root {
-  --foreground-color: #000;
-  --background-color: #C1C8E4;
-  --primary-color: #5680E9;
-  --secondary-color: #59EBCB;
+  --color-background: #C1C8E4;
+  --color-primary: #5680E9;
+  --color-secondary: #59EBCB;
+  --color-text: #000;
+  --color-text-muted: #64748b;
 }
 
-body {
-  color: var(--foreground-color);
-  background: var(--background-color);
+.toggle-switch > input:checked +  div {
+  translate: 2.5rem;
 }

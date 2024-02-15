@@ -1,0 +1,85 @@
+'use client';
+
+import { StyleContext } from "@/app/StyleContext";
+import Box from "@/app/components/styleComponents/Box";
+import Button from "@/app/components/styleComponents/Button";
+import Input from "@/app/components/styleComponents/Input";
+import { createTheme } from "@/app/mongo/Controller/themeController";
+import { Theme } from "@/app/mongo/Model/themeModel";
+import { useContext, useEffect, useState } from "react";
+
+function opacityToHex(opacity: string) {
+    return Math.round((parseInt(opacity) / 100) * 255).toString(16).toUpperCase();
+}
+
+function opacityToRange(opacity?: string) {
+    return opacity ? Math.round((parseInt(opacity, 16) / 255) * 100).toString() : 'FF';
+}
+
+export default function DesignSettings() {
+    const [theme, setTheme] = useContext(StyleContext);
+    const [originalTheme, setOriginalTheme] = useState<Theme | null>(null);
+    const [name, setName] = useState('default');
+    useEffect(() => {
+        if(!originalTheme) {
+            setOriginalTheme(theme);
+        }
+        return () => {
+            if(originalTheme && setTheme)
+                setTheme(originalTheme);
+        }
+    }, []);
+
+    const handleSaveTheme = async () => {
+        setOriginalTheme(theme);
+        if(theme)
+            await createTheme(theme, name);
+    }
+    if(!theme) {
+        return <div>Loading...</div>
+    }
+    return (
+        <main className="mt-20 mb-10 flex justify-center items-start">
+            <Box className="p-6 py-12 md:p-12 flex flex-col gap-8 w-[95vw] max-w-5xl">
+                <div className="flex items-center gap-4 justify-between"><span >Name:</span><Input className="p-2 rounded-sm w-2/3" value={name} onChange={(e) => setName(e.target.value)} variant="primary" placeholder="Theme Name" label="Theme Name"/></div>
+                <hr />
+                <h2 className="text-xl">Colors</h2>
+                <div className="grid grid-cols-4 gap-4 items-center">
+                    <span>Neutral</span>
+                    <Input label="Neutral Color" type="color" className="" value={theme?.colors?.neutral} onChange={(e) => setTheme && setTheme({...theme, colors: {...theme.colors, neutral: e.target.value}})} />
+                    <span>Primary</span>
+                    <Input label="Primary Color" type="color" className="" value={theme?.colors?.primary} onChange={(e) => setTheme && setTheme({...theme, colors: {...theme.colors, primary: e.target.value}})} />
+                    <span>Secondary</span>
+                    <Input label="Secondary Color" type="color" className="" value={theme?.colors?.secondary} onChange={(e) => setTheme && setTheme({...theme, colors: {...theme.colors, secondary: e.target.value}})} />
+                    <div className="col-span-2"/>
+                    <span>Text</span>
+                    <Input label="Text Color" type="color" className="" value={theme?.colors?.text} onChange={(e) => setTheme && setTheme({...theme, colors: {...theme.colors, text: e.target.value}})} />
+                    <span>Emphasised Text</span>
+                    <Input label="Emphasised Text Color" type="color" className="" value={theme?.colors?.textEmphasis} onChange={(e) => setTheme && setTheme({...theme, colors: {...theme.colors, textEmphasis: e.target.value}})} />
+                    <span>Muted Text</span>
+                    <Input label="Muted Text Color" type="color" className="" value={theme?.colors?.textMuted} onChange={(e) => setTheme && setTheme({...theme, colors: {...theme.colors, textMuted: e.target.value}})} />
+                </div>
+                <hr/>
+                <h2 className="text-xl">Opacity</h2>
+                <div className="grid grid-cols-4 gap-4">
+                    <span>Box</span><Input label="Box Opacity" type="range" className="col-span-3 w-full" value={opacityToRange(theme?.transparency?.box)} onChange={(e) => setTheme && setTheme({...theme, transparency: {...theme.transparency, box: opacityToHex(e.target.value)}})} />
+                    <span>Input</span><Input label="Input Opacity" type="range" className="col-span-3 w-full" value={opacityToRange(theme?.transparency?.input)} onChange={(e) => setTheme && setTheme({...theme, transparency: {...theme.transparency, input: opacityToHex(e.target.value)}})} />
+                </div>
+                <hr/>
+                <h2 className="text-xl">Background</h2>
+                <div className="grid grid-cols-4 gap-4">
+                    <span>Background Color</span><Input label="Background Color" type="color" className="col-span-3 w-full" value={theme?.colors?.background} onChange={(e) => setTheme && setTheme({...theme, colors: {...theme.colors, background: e.target.value}})} />
+                    <span>Background Image</span><Input label="Background Image" type="url" className="col-span-3 w-full" value={theme?.background?.body} onChange={(e) => setTheme && setTheme({...theme, background: {...theme.background, body: e.target.value}})} />
+                </div>
+                <hr/>
+                <div className="grid grid-cols-4 gap-4">
+                    <Button variant="primary" className="hover:scale-95 justify-center items-center">Primary Button</Button>
+                    <Button variant="secondary" className="hover:scale-95 justify-center items-center">Secondary Button</Button>
+                    <Button variant="tertiary" className="hover:scale-95 justify-center items-center">Tertiary Button</Button>
+                    <Button variant="tertiary-active" className="hover:scale-95 justify-center items-center">Active Button</Button>
+                </div>
+                <Button onClick={handleSaveTheme} className="justify-center hover:scale-95 rounded">Save Theme</Button>
+            </Box>
+        </main>
+    )
+}

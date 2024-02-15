@@ -1,0 +1,21 @@
+{
+    "light-blue": {
+        "colors" : {
+            "background": "#C1C8E4",
+            "primary": "#5680E9",
+            "secondary": "#59EBCB",
+            "text": "#000000",
+            "text-muted": "#64748B",
+            "text-emphasis": "#235be8"
+        }
+    }, "dark-purple": {
+        "colors" : {
+            "background": "#2C0735",
+            "primary": "#A239CA",
+            "secondary": "#F7B801",
+            "text": "#FFFFFF",
+            "text-muted": "#64748B",
+            "text-emphasis": "#c657f2"
+        }
+    }
+}
