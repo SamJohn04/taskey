@@ -19,7 +19,7 @@ export async function createTheme(theme: Theme, themeName: string): Promise<{ su
         }
     }
     try {
-        await themeModel.updateOne({uId: user?.sub, name: themeName}, {...theme, uId: user?.sub, name: themeName}, {upsert: true});
+        await themeModel.updateOne({uId: user?.sub, name: themeName}, {...theme, uId: user?.sub, name: themeName}, {upsert: true}).exec();
         return {
             success: true,
         }
@@ -29,8 +29,6 @@ export async function createTheme(theme: Theme, themeName: string): Promise<{ su
             success: false,
             error: error
         }
-    } finally {
-        await connection?.disconnect()
     }
 }
 
@@ -49,7 +47,7 @@ export async function getTheme() {
         }
     }
     try {
-        const themeResult = await themeModel.findOne({uId: user.sub}, {}, {sort: {createdAt: -1}});
+        const themeResult = await themeModel.findOne({uId: user.sub}, {}, {sort: {createdAt: -1}}).exec();
         const theme = {
             colors: {
                 background: themeResult.colors.background,
@@ -82,7 +80,5 @@ export async function getTheme() {
             success: false,
             error: error
         }
-    } finally {
-        await connection?.disconnect()
     }
 }

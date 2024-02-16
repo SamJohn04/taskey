@@ -24,8 +24,6 @@ export async function createTask(task: Task): Promise<{ success: true } | { succ
             success: false,
             error: error
         }
-    } finally {
-        await connection?.disconnect()
     }
 }
 
@@ -44,7 +42,7 @@ export async function getTasks(): Promise<{success: false, error: unknown} | {su
         }
     }
     try {
-        const tasks: Task[] = (await TaskModel.find({uId: user.sub})).toSorted((a: Task, b: Task) => {
+        const tasks: Task[] = (await TaskModel.find({uId: user.sub}).exec()).toSorted((a: Task, b: Task) => {
             if(a.important && !b.important) {
                 return -1;
             }
@@ -80,8 +78,6 @@ export async function getTasks(): Promise<{success: false, error: unknown} | {su
             success: false,
             error: error
         }
-    } finally {
-        await connection?.disconnect();
     }
 }
 
@@ -100,7 +96,7 @@ export async function updateTaskImportant(taskId: string, important: boolean) {
                 error: 'User not found'
             }
         }
-        const res = await TaskModel.findOneAndUpdate({ _id: taskId, uId: user.sub }, { important });
+        const res = await TaskModel.findOneAndUpdate({ _id: taskId, uId: user.sub }, { important }).exec();
         return (res !== null);
     } catch(error) {
         console.log('Task Update Error: ', error)
@@ -108,8 +104,6 @@ export async function updateTaskImportant(taskId: string, important: boolean) {
             success: false,
             error: error
         }
-    } finally {
-        await connection?.disconnect();
     }
 }
 
@@ -135,7 +129,7 @@ export async function getTaskById(taskId: string): Promise<{
             }
         }
 
-        const task = await TaskModel.findById(taskId);
+        const task = await TaskModel.findById(taskId).exec();
         if(task.uId !== user.sub) {
             return {
                 success: false,
@@ -165,8 +159,6 @@ export async function getTaskById(taskId: string): Promise<{
             success: false,
             error: error
         }
-    } finally {
-        await connection?.disconnect();
     }
 }
 
@@ -185,7 +177,7 @@ export async function updateTaskTags(taskId: string, tags: string[]) {
                 error: 'User not found'
             }
         }
-        const res = await TaskModel.findOneAndUpdate({ _id: taskId, uId: user.sub }, { tags });
+        const res = await TaskModel.findOneAndUpdate({ _id: taskId, uId: user.sub }, { tags }).exec();
         return (res !== null);
     } catch(error) {
         console.log('Task Update Error: ', error)
@@ -193,7 +185,5 @@ export async function updateTaskTags(taskId: string, tags: string[]) {
             success: false,
             error: error
         }
-    } finally {
-        await connection?.disconnect();
     }
 }

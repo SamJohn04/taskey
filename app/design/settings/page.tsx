@@ -68,8 +68,8 @@ export default function DesignSettings() {
                 <hr/>
                 <h2 className="text-xl">Background</h2>
                 <div className="grid grid-cols-4 gap-4">
-                    <span>Background Color</span><Input label="Background Color" type="color" className="col-span-3 w-full" value={theme?.colors?.background} onChange={(e) => setTheme && setTheme({...theme, colors: {...theme.colors, background: e.target.value}})} />
-                    <span>Background Image</span><Input label="Background Image" type="url" className="col-span-3 w-full" value={theme?.background?.body} onChange={(e) => setTheme && setTheme({...theme, background: {...theme.background, body: e.target.value}})} />
+                    <span>Background Color</span><Input label="Background Color" type="color" className="col-span-3 w-full rounded-sm" value={theme?.colors?.background} onChange={(e) => setTheme && setTheme({...theme, colors: {...theme.colors, background: e.target.value}})} />
+                    <span>Background Image</span><Input label="Background Image" type="url" className="col-span-3 w-full p-2 rounded-sm" value={theme?.background?.body} onChange={(e) => setTheme && setTheme({...theme, background: {...theme.background, body: e.target.value}})} />
                 </div>
                 <hr/>
                 <div className="grid grid-cols-4 gap-4">

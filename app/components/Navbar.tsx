@@ -28,10 +28,6 @@ export default function Navbar() {
     }, {
         title: 'Tasks',
         href: '/tasks',
-    }, {
-        title: 'New Task',
-        href: '/tasks/new',
-    
     }]
     if (isLoading) {
         return (
