@@ -1,13 +1,15 @@
 import { connect } from "mongoose";
 
-let connection: any;
+if(!global._connectionPromise) {
+    global._connectionPromise = connect(process.env.MONGODB_URI ?? 'mongodb://localhost:27017/taskey');
+}
+let connectionPromise = global._connectionPromise;
 
 export async function connectDB() {
     try {
-        console.log(123)
+        const connection = await connectionPromise;
         if(!connection) {
-            console.log(456)
-            connection = await connect(process.env.MONGODB_URI ?? 'mongodb://localhost:27017/taskey');
+            // connection = await connect(process.env.MONGODB_URI ?? 'mongodb://localhost:27017/taskey');
         }
         return {
             success: true,

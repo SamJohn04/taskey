@@ -17,7 +17,7 @@ export default async function Tasks() {
     }
     return (
         <main className="w-[95dvw] mt-20 mx-auto flex flex-col gap-4 items-center justify-center">
-            <div className="w-full flex justify-between items-center"><div></div><Button className="rounded hover:scale-95 justify-self-end">New Task</Button></div>
+            <div className="w-full flex justify-between items-center"><Button className="rounded hover:scale-95 justify-self-end">New Task</Button></div>
             <div className="w-full flex gap-4">
                 <TaskNav />
                 <div className="w-[95vw] max-w-6xl"><TaskList tasks={result.tasks}/></div>
