@@ -9,9 +9,9 @@ export const taskSchema = new Schema({
         required: true
     }, status: {
         type: String,
-        enum: ['waiting', 'ongoing', 'completed', 'dropped'],
+        enum: ['in progress', 'completed', 'dropped'],
         required: true,
-        default: 'waiting'
+        default: 'in progress'
     }, dueAt: Date,
     completedAt: Date,
     important: {
@@ -32,7 +32,7 @@ export const taskSchema = new Schema({
 export type Task = {
     title: string,
     description: string,
-    status?: 'waiting' | 'ongoing' | 'completed' | 'dropped',
+    status?: 'in progress' | 'completed' | 'dropped',
     dueAt?: Date,
     completedAt?: Date,
     important?: boolean,

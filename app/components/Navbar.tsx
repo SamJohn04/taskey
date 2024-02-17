@@ -31,7 +31,7 @@ export default function Navbar() {
     }]
     if (isLoading) {
         return (
-            <header className="mt-5 w-4/5 sticky top-2 m-auto z-20"><Box className="p-2 py-1 bg-primary/20 rounded-md shadow-md">
+            <header className="md:mt-5 w-full md:w-4/5 relative md:sticky md:top-2 m-auto z-20"><Box className="p-2 py-1 bg-primary/20 rounded-md shadow-md">
                 <nav className="w-full min-h-10 flex items-stretch">
                     <Link href='/' className="px-4 flex items-center gap-2">
                         <img className="w-10 h-10 rounded-full" src="/next.svg" alt="TasKey" />
@@ -51,7 +51,7 @@ export default function Navbar() {
 
     if (error) {
         return (
-            <header className="mt-5 w-4/5 sticky top-2 m-auto z-20"><Box className="p-2 py-1 bg-primary/20 rounded-md shadow-md">
+            <header className="md:mt-5 w-full md:w-4/5 relative md:sticky md:top-2 m-auto z-20"><Box className="p-2 py-1 bg-primary/20 rounded-md shadow-md">
                 <nav className="w-full min-h-10 flex items-stretch">
                     <Link href='/' className="px-4 flex items-center gap-2">
                         <img className="w-10 h-10 rounded-full" src="/next.svg" alt="TasKey" />
@@ -66,7 +66,7 @@ export default function Navbar() {
     }
 
     return (
-        <header className="mt-5 w-4/5 sticky top-2 m-auto z-20"><Box className="p-2 py-1 bg-primary/20 rounded-md shadow-md">
+        <header className="md:mt-5 w-full md:w-4/5 relative md:sticky md:top-2 m-auto z-20"><Box className="p-2 py-1 bg-primary/20 rounded-md shadow-md">
             <nav className="min-h-10 flex items-stretch">
                 <Link href='/' className="px-4 flex items-center gap-2">
                     <img className="w-10 h-10 rounded-full" src="/next.svg" alt="TasKey" />
@@ -79,7 +79,7 @@ export default function Navbar() {
                     <div className="flex w-full items-stretch justify-end gap-4">
                         {isLoggedIn && <UserCard user={user}/>}
                         {!isLoggedIn && <Link href='/api/auth/login' className="flex items-stretch">
-                            <Button variant="secondary" className="hover:scale-95">Login</Button>
+                            <Button variant="secondary" className="hover:scale-95 active:scale-95">Login</Button>
                         </Link>}
                     </div>
                 </div>

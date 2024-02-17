@@ -73,12 +73,12 @@ export default function DesignSettings() {
                 </div>
                 <hr/>
                 <div className="grid grid-cols-4 gap-4">
-                    <Button variant="primary" className="hover:scale-95 justify-center items-center">Primary Button</Button>
-                    <Button variant="secondary" className="hover:scale-95 justify-center items-center">Secondary Button</Button>
-                    <Button variant="tertiary" className="hover:scale-95 justify-center items-center">Tertiary Button</Button>
-                    <Button variant="tertiary-active" className="hover:scale-95 justify-center items-center">Active Button</Button>
+                    <Button variant="primary" className="hover:scale-95 active:scale-95 justify-center items-center">Primary Button</Button>
+                    <Button variant="secondary" className="hover:scale-95 active:scale-95 justify-center items-center">Secondary Button</Button>
+                    <Button variant="tertiary" className="hover:scale-95 active:scale-95 justify-center items-center">Tertiary Button</Button>
+                    <Button variant="tertiary-active" className="hover:scale-95 active:scale-95 justify-center items-center">Active Button</Button>
                 </div>
-                <Button onClick={handleSaveTheme} className="justify-center hover:scale-95 rounded">Save Theme</Button>
+                <Button onClick={handleSaveTheme} className="justify-center hover:scale-95 active:scale-95 rounded">Save Theme</Button>
             </Box>
         </main>
     )

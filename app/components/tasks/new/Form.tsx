@@ -94,8 +94,8 @@ export default function Form() {
                     <div className="w-full max-w-5xl m-auto flex flex-col items-stretch text-lg gap-4"><span className="flex items-center gap-4">Have a due date? <ToggleSwitch variant="primary" onChange={(e : React.ChangeEvent<HTMLInputElement>) => setDueDateIsOpen(e.currentTarget.checked)}/></span><Input name="dueAt" style={{visibility: dueDateIsOpen ? 'visible' : 'collapse'}} type="datetime-local"/></div>
                     <div className="w-full max-w-5xl m-auto flex flex-col items-stretch text-lg gap-4"><span className="flex items-center gap-4">Repeat? <ToggleSwitch variant="primary" onChange={(e : React.ChangeEvent<HTMLInputElement>) => setRepeatIsOpen(e.currentTarget.checked)}/></span><Select name='repeat' options={['instantly', 'daily', 'weekly', 'monthly', 'yearly']} style={{visibility: repeatIsOpen ? 'visible' : 'collapse'}}/></div>
                 </motion.div>
-            <Button type="submit" className="mt-4 flex justify-center items-center rounded hover:scale-95 disabled:hover:scale-100 disabled:grayscale" disabled={loading || isLoading}>Create</Button>
-            <dialog ref={dialogRef} className="rounded-md"><Box className="p-4 rounded-md flex flex-col gap-4"><span className="text-xl">{dialogMessage}</span><Button className="items-center justify-center hover:scale-95" onClick={() => dialogRef.current?.close()}>Ok!</Button></Box></dialog>
+            <Button type="submit" className="mt-4 flex justify-center items-center rounded hover:scale-95 disabled:hover:scale-100 active:scale-95 disabled:active:scale-100 disabled:grayscale" disabled={loading || isLoading}>Create</Button>
+            <dialog ref={dialogRef} className="rounded-md"><Box className="p-4 rounded-md flex flex-col gap-4"><span className="text-xl">{dialogMessage}</span><Button className="items-center justify-center hover:scale-95 active:scale-95" onClick={() => dialogRef.current?.close()}>Ok!</Button></Box></dialog>
         </form>
     )
 }

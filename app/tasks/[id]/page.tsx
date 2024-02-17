@@ -1,10 +1,10 @@
 import Box from "@/app/components/styleComponents/Box";
 import { getTaskById, updateTaskTags } from "@/app/mongo/Controller/taskController";
-import ImportantMarker from "./components/ImportantMarker";
+import ImportantMarker from "../../components/tasks/ImportantMarker";
 import { getDateTimeMessage } from "@/app/utils/utils";
 import Span from "@/app/components/styleComponents/Span";
 import Tag from "@/app/components/Tag";
-import AddTag from "./components/AddTag";
+import AddTag from "../../components/tasks/AddTag";
 import Select from "@/app/components/styleComponents/Select";
 
 export default async function Task({ params }: { params: { id: string } }) {
@@ -48,7 +48,7 @@ export default async function Task({ params }: { params: { id: string } }) {
                 </div>
                 <div className="flex gap-2">{task.tags?.map((tag, index) => <Tag key={index} tag={tag} handleClose={getTagCloseHandler(index)}><span className="text-nowrap truncate w-full">{tag}</span></Tag>)}<AddTag onTagCreate={onTagCreate}/></div>
                 <p className="text-lg whitespace-pre">{task.description}</p>
-                <Select options={['waiting', 'ongoing', 'completed', 'dropped']} defaultValue={task.status}/>
+                <Select options={['in progress', 'completed', 'dropped']} defaultValue={task.status}/>
             </Box>
         </main>
     )

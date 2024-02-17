@@ -4,8 +4,8 @@ import { StyleContext } from "@/app/StyleContext";
 import { useContext, useRef } from "react";
 
 export default function ToggleSwitch({variant, onChange}: {
-    variant: "primary" | "secondary" | "tertiary";
-    onChange: React.ChangeEventHandler<HTMLInputElement>;
+    variant?: "primary" | "secondary" | "tertiary";
+    onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }) {
     const inputRef = useRef<HTMLInputElement>(null);
     const [theme, ] = useContext(StyleContext);

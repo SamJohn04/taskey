@@ -1,4 +1,4 @@
-import TaskListSkeleton from "../components/TaskListSkeleton";
+import TaskListSkeleton from "../components/tasks/TaskListSkeleton";
 
 export default function Loading() {
     return (

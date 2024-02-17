@@ -30,8 +30,8 @@ export default function UserCard({ user }: { user: UserProfile }) {
             {isOpen && <Box id='user-card' className="flex flex-col items-center gap-2 md:gap-4 p-2 absolute top-full left-1/2 -translate-x-1/2 mt-3 rounded-md z-30">
                 <img src={user.picture ?? undefined} alt={user.name ?? ''} className="w-20 h-20 rounded-full" />
                 <span>{user.email}</span>
-                <Link href='/design/settings' className="w-full"><Button variant="primary" className="flex items-center justify-center w-full hover:scale-95">Alter Theme</Button></Link>
-                <Link href='/api/auth/logout' className="w-full"><Button variant="secondary" className="flex items-center justify-center w-full hover:scale-95">Logout</Button></Link>
+                <Link href='/design/settings' className="w-full"><Button variant="primary" className="flex items-center justify-center w-full hover:scale-95 active:scale-95">Alter Theme</Button></Link>
+                <Link href='/api/auth/logout' className="w-full"><Button variant="secondary" className="flex items-center justify-center w-full hover:scale-95 active:scale-95">Logout</Button></Link>
             </Box>}
         </div>
     )

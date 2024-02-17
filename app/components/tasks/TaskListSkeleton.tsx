@@ -1,4 +1,4 @@
-import Box from "./styleComponents/Box";
+import Box from "../styleComponents/Box";
 
 export default function TaskListSkeleton() {
     return (
