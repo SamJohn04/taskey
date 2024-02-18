@@ -4,7 +4,7 @@ export function getDateTimeMessage(date?: Date): string {
     }
     const currentDate = new Date();
     const diff = date.getTime() - currentDate.getTime();
-    const days = Math.abs(Math.floor(diff / (1000 * 60 * 60 * 24)));
+    const days = Math.floor(Math.abs(diff / (1000 * 60 * 60 * 24)));
     if(days > 0) {
         if(days === 1) {
             return diff < 0 ? "yesterday" : "tomorrow";
@@ -15,14 +15,14 @@ export function getDateTimeMessage(date?: Date): string {
             return date.toDateString();
         }
     }
-    const hours = Math.abs(Math.floor(diff / (1000 * 60 * 60)));
+    const hours = Math.floor(Math.abs(diff / (1000 * 60 * 60)));
     if(hours > 0) {
         if(hours === 1) {
             return diff < 0 ? "an hour ago" : "in an hour";
         }
         return diff < 0 ? `${hours} hours ago` : `in ${hours} hours`;
     }
-    const minutes = Math.abs(Math.floor(diff / (1000 * 60)));
+    const minutes = Math.floor(Math.abs(diff / (1000 * 60)));
     if(minutes > 0) {
         if(minutes === 1) {
             return diff < 0 ? "a minute ago" : "in a minute";

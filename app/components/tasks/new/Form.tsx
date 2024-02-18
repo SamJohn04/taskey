@@ -21,7 +21,7 @@ export default function Form() {
     const [moreOpen, setMoreOpen] = React.useState<boolean>(false);
     const [showEnterMessage, setShowEnterMessage] = React.useState<boolean>(false);
     const [dueDateIsOpen, setDueDateIsOpen] = React.useState<boolean>(false);
-    const [repeatIsOpen, setRepeatIsOpen] = React.useState<boolean>(false);
+    const [repeat, setRepeat] = React.useState<boolean>(false);
     const { user, error, isLoading } = useUser();
     const [ loading, setLoading ] = React.useState<boolean>(false);
     
@@ -47,7 +47,7 @@ export default function Form() {
             tags: tags,
             description: formData.get("description") as string,
             dueAt: dueDateIsOpen ? new Date(formData.get("dueAt") as string) : undefined,
-            repeating: repeatIsOpen ? formData.get("repeat") as 'instantly' | 'daily' | 'weekly' | 'monthly' | 'yearly' : undefined,
+            repeating: repeat,
         }
         const res = await createTask(task);
         if(res.success) {
@@ -83,7 +83,7 @@ export default function Form() {
         <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit}>
             <div className="flex justify-between items-center"><h2 className="w-full max-w-6xl mx-auto text-lg md:text-2xl font-semibold">Details</h2><button type="button" onClick={() => setImportant(important => !important)}><Star isStarred={important}/></button></div>
             <div className="w-full max-w-5xl m-auto flex items-stretch text-lg gap-4"><Input name="title" className="w-full p-2 rounded-sm" required type="text" placeholder="Title"/></div>
-            <div className="w-full max-w-5xl m-auto flex items-stretch text-lg gap-4"><Input multiline name="description" placeholder="Description" required className="w-full p-2 rounded-sm" maxLength={10000}/></div>
+            <div className="w-full max-w-5xl m-auto flex items-stretch text-lg gap-4"><Input multiline name="description" placeholder="Description" className="w-full p-2 rounded-sm" maxLength={10000}/></div>
             <h2 className="w-full max-w-6xl mx-auto text-lg md:text-2xl font-semibold">Tags</h2>
             <div className="w-full max-w-5xl m-auto flex flex-col items-start gap-4 text-lg">
                 <div className="grid grid-cols-2 md:grid-cols-6 gap-4 items-center">{tags.map((tag, index) => <Tag key={index} tag={tag} handleClose={getCloseHandler(index)}><span className="text-nowrap truncate w-full">{tag}</span></Tag>)}</div>
@@ -92,7 +92,7 @@ export default function Form() {
             <Button variant={moreOpen ? "tertiary-active" : "tertiary"} className="flex justify-center items-center group gap-4" onClick={() => setMoreOpen(isOpen => !isOpen)}><MoreVert isOpen={moreOpen}/>More Options</Button>
                 <motion.div initial={{scaleY: 0}} whileInView={{scaleY: 1}} style={moreOpen ? {} : {display: 'none'}} className="flex flex-col gap-4">
                     <div className="w-full max-w-5xl m-auto flex flex-col items-stretch text-lg gap-4"><span className="flex items-center gap-4">Have a due date? <ToggleSwitch variant="primary" onChange={(e : React.ChangeEvent<HTMLInputElement>) => setDueDateIsOpen(e.currentTarget.checked)}/></span><Input name="dueAt" style={{visibility: dueDateIsOpen ? 'visible' : 'collapse'}} type="datetime-local"/></div>
-                    <div className="w-full max-w-5xl m-auto flex flex-col items-stretch text-lg gap-4"><span className="flex items-center gap-4">Repeat? <ToggleSwitch variant="primary" onChange={(e : React.ChangeEvent<HTMLInputElement>) => setRepeatIsOpen(e.currentTarget.checked)}/></span><Select name='repeat' options={['instantly', 'daily', 'weekly', 'monthly', 'yearly']} style={{visibility: repeatIsOpen ? 'visible' : 'collapse'}}/></div>
+                    <div className="w-full max-w-5xl m-auto flex flex-col items-stretch text-lg gap-4"><span className="flex items-center gap-4 underline decoration-dashed" title="Create a new copy of the task once it is complete">Repeat? <ToggleSwitch variant="primary" onChange={(e : React.ChangeEvent<HTMLInputElement>) => setRepeat(e.currentTarget.checked)}/></span></div>
                 </motion.div>
             <Button type="submit" className="mt-4 flex justify-center items-center rounded hover:scale-95 disabled:hover:scale-100 active:scale-95 disabled:active:scale-100 disabled:grayscale" disabled={loading || isLoading}>Create</Button>
             <dialog ref={dialogRef} className="rounded-md"><Box className="p-4 rounded-md flex flex-col gap-4"><span className="text-xl">{dialogMessage}</span><Button className="items-center justify-center hover:scale-95 active:scale-95" onClick={() => dialogRef.current?.close()}>Ok!</Button></Box></dialog>

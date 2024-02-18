@@ -45,7 +45,7 @@ export default async function Task({ params }: { params: { id: string } }) {
             <Box className="p-3 py-12 md:p-12 flex flex-col gap-8 w-[97vw] max-w-5xl">
                 <div>
                     <h1 className="text-2xl font-semibold w-full flex justify-between items-center">{task.title}<ImportantMarker _id={task._id ?? ''} important={task.important ?? false}/></h1>
-                    <div className="text-sm"><Span variant="textMuted">Created: {createdAtMessage}</Span> | <Span variant={ task.dueAt && task.dueAt.getTime() > new Date().getTime() ? 'success' : 'danger' }>Due Date: {dueAtMessage}</Span></div>
+                    <div className="text-sm">{task.status === 'completed' ? <Span>Completed: {String(task.completedAt)}</Span> : <><Span variant="textMuted">Created: {createdAtMessage}</Span> | <Span variant={ task.dueAt ? task.dueAt.getTime() > new Date().getTime() ? 'success' : 'danger' : 'textMuted' }>Due Date: {dueAtMessage}</Span></>}</div>
                 </div>
                 <Tags task={task} getTagCloseHandler={getTagCloseHandler} onTagCreate={onTagCreate}/>
                 <p className="text-lg whitespace-pre">{task.description}</p>

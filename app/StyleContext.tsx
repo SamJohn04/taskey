@@ -14,8 +14,6 @@ export const themes: Record<string, Theme> = {
             textEmphasis: "#235be8",
             neutral: "#F5F5F5",
             success: "#2FAD79",
-        }, background: {
-            body: "https://t3.ftcdn.net/jpg/06/22/47/80/360_F_622478027_EdX1Pb0KGjSUowbOpw1n9nsb2ijMcx6G.jpg"
         }, transparency: {
             box: "65",
             input: '33'

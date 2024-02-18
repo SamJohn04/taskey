@@ -15,7 +15,9 @@ export default function TasksView({tasks} : { tasks: Task[] }) {
     const params = useSearchParams();
     const filteredTasks = React.useMemo(() => {
         const filter = params.get('filter');
-        if(filter === 'important') {
+        if(filter === null) {
+            return tasks.filter(task => task.status === 'in progress');
+        } else if(filter === 'important') {
             return tasks.filter(task => task.important);
         } else if(filter === 'completed') {
             return tasks.filter(task => task.status === 'completed');

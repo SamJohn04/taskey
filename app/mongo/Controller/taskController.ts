@@ -43,6 +43,12 @@ export async function getTasks(): Promise<{success: false, error: unknown} | {su
     }
     try {
         const tasks: Task[] = (await TaskModel.find({uId: user.sub}).exec()).toSorted((a: Task, b: Task) => {
+            if(a.status === 'completed' && b.status !== 'completed') {
+                return 1;
+            }
+            if(a.status !== 'completed' && b.status === 'completed') {
+                return -1;
+            }
             if(a.important && !b.important) {
                 return -1;
             }
@@ -208,8 +214,35 @@ export async function updateTaskStatus(taskId: string, status: string) {
                 error: 'Invalid status'
             }
         }
-        const res = await TaskModel.findOneAndUpdate({ _id: taskId, uId: user.sub }, { status }).exec();
-        return (res !== null);
+        const task = await TaskModel.findById(taskId).exec();
+        if(!task || task.uId !== user.sub) {
+            return {
+                success: false,
+                error: 'Task not found'
+            }
+        }
+        task.status = status;
+        task.completedAt = status === 'completed' ? new Date() : undefined;
+        await task.save()
+        if(task.repeating && status === 'completed' && task.originalId === undefined) {
+            const newTask = {
+                ...task.toObject(),
+                _id: undefined,
+                status: undefined,
+                originalId: task._id
+            }
+            await TaskModel.create(newTask);
+        } else if (task.repeating && status === 'completed') {
+            const openTask = await TaskModel.find({ originalId: task.originalId, status: 'in progress' }).exec();
+            if(openTask.length === 0) {
+                const newTask = {
+                    ...task.toObject(),
+                    _id: undefined,
+                    status: undefined,
+                }
+                await TaskModel.create(newTask);
+            }
+        }
     } catch(error) {
         console.log('Task Update Error: ', error)
         return {

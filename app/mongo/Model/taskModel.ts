@@ -6,7 +6,7 @@ export const taskSchema = new Schema({
         required: true
     }, description: {
         type: String,
-        required: true
+        default: ""
     }, status: {
         type: String,
         enum: ['in progress', 'completed', 'dropped'],
@@ -21,10 +21,8 @@ export const taskSchema = new Schema({
         type: String,
         required: true
     }, tags: [String],
-    repeating: {
-        type: String,
-        enum: ['instantly', 'daily', 'weekly', 'monthly', 'yearly']
-    }
+    repeating: Boolean,
+    originalId: String
 }, {
     timestamps: true,
 })
@@ -38,9 +36,10 @@ export type Task = {
     important?: boolean,
     uId: string,
     tags?: string[],
-    repeating?: 'instantly' | 'daily' | 'weekly' | 'monthly' | 'yearly',
+    repeating?: boolean,
     _id?: string,
     createdAt?: Date,
+    originalId?: string
 }
 
 const taskModel = models.Task || model('Task', taskSchema);

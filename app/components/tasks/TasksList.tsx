@@ -16,7 +16,7 @@ export default function TaskList({ tasks, compact } : { tasks: Task[], compact?:
             <span className="md:mb-4 md:text-lg col-span-2 md:col-span-1">Due</span>
             <span className="md:mb-4 md:text-lg col-span-3 md:col-span-2">Title</span>
             <span className="md:mb-4 md:text-lg hidden sm:inline sm:col-span-2 md:col-span-4">Description</span>
-            { tasks.map((task, index) => <TaskCard key={index} task={task} compact={compact}/>) }
+            { tasks.map((task, index) => <TaskCard key={task._id ?? task.createdAt?.getTime()} task={task} compact={compact}/>) }
         </Box>
     )
 }
