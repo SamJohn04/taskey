@@ -20,6 +20,6 @@ export default function AddTag({ onTagCreate } : { onTagCreate: (tag: string) =>
         )
     }
     return (
-        <Button variant="basic" noPad className="rounded-full aspect-square flex items-center justify-center transition hover:rotate-90 active:rotate-90" onClick={() => setTagOpen(val => !val)}>{tagOpen ? <Close /> : <Add />}</Button>
+        <Button variant="basic" noPad className="rounded-full w-8 md:w-10 h-8 md:h-10 flex items-center justify-center transition hover:rotate-90 active:rotate-90" onClick={() => setTagOpen(val => !val)}>{tagOpen ? <Close /> : <Add />}</Button>
     )
 }

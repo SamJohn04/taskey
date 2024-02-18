@@ -34,7 +34,7 @@ export default function Button({ children, className, type, variant, style, isAc
         }
     }
     return (
-        <button type={type ?? 'button'} disabled={disabled} className={`flex items-center ${!noPad && 'px-4 py-2'} ${variant === 'primary' || variant === 'secondary' ? 'rounded-md shadow-md' : ""} transition ${className ?? ''}`} style={{...variantStyles[variant ?? "primary"], ...style}} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} onClick={onClick}>
+        <button type={type ?? 'button'} disabled={disabled} className={`flex items-center ${noPad ? '' : 'px-4 py-2'} ${variant === 'primary' || variant === 'secondary' ? 'shadow-md' : ""} transition ${className ?? ''}`} style={{...variantStyles[variant ?? "primary"], ...style}} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} onClick={onClick}>
             {children}
         </button>
     )

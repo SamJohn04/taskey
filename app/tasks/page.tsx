@@ -14,7 +14,7 @@ export default async function Tasks() {
         return <h1>Failed to get tasks</h1>
     }
     return (
-        <main className="w-[95dvw] mt-10 md:mt-20 mx-auto flex flex-col items-start md:grid md:grid-cols-4 gap-4">
+        <main className="w-[95dvw] mt-20 mx-auto flex flex-col items-start md:grid md:grid-cols-4 gap-4">
             <TasksView tasks={result.tasks} />
         </main>
     )

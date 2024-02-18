@@ -5,7 +5,8 @@ import { getDateTimeMessage } from "@/app/utils/utils";
 import Span from "@/app/components/styleComponents/Span";
 import Tag from "@/app/components/Tag";
 import AddTag from "../../components/tasks/AddTag";
-import Select from "@/app/components/styleComponents/Select";
+import TaskStatus from "@/app/components/tasks/task/TaskStatus";
+import Tags from "@/app/components/tasks/task/Tags";
 
 export default async function Task({ params }: { params: { id: string } }) {
     const result = await getTaskById(params.id);
@@ -41,14 +42,14 @@ export default async function Task({ params }: { params: { id: string } }) {
     }
     return (
         <main className="mt-20 flex justify-center items-start">
-            <Box className="p-6 py-12 md:p-12 flex flex-col gap-8 w-[95vw] max-w-5xl">
+            <Box className="p-3 py-12 md:p-12 flex flex-col gap-8 w-[97vw] max-w-5xl">
                 <div>
                     <h1 className="text-2xl font-semibold w-full flex justify-between items-center">{task.title}<ImportantMarker _id={task._id ?? ''} important={task.important ?? false}/></h1>
                     <div className="text-sm"><Span variant="textMuted">Created: {createdAtMessage}</Span> | <Span variant={ task.dueAt && task.dueAt.getTime() > new Date().getTime() ? 'success' : 'danger' }>Due Date: {dueAtMessage}</Span></div>
                 </div>
-                <div className="flex gap-2">{task.tags?.map((tag, index) => <Tag key={index} tag={tag} handleClose={getTagCloseHandler(index)}><span className="text-nowrap truncate w-full">{tag}</span></Tag>)}<AddTag onTagCreate={onTagCreate}/></div>
+                <Tags task={task} getTagCloseHandler={getTagCloseHandler} onTagCreate={onTagCreate}/>
                 <p className="text-lg whitespace-pre">{task.description}</p>
-                <Select options={['in progress', 'completed', 'dropped']} defaultValue={task.status}/>
+                <TaskStatus task={task}/>
             </Box>
         </main>
     )

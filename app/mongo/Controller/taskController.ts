@@ -187,3 +187,34 @@ export async function updateTaskTags(taskId: string, tags: string[]) {
         }
     }
 }
+
+export async function updateTaskStatus(taskId: string, status: string) {
+    const { success, connection, error } = await connectDB();
+    try {
+        const { user } = (await getSession()) ?? {};
+        if (!success) {
+            return {
+                success: false,
+                error: error
+            }
+        } else if (!user) {
+            return {
+                success: false,
+                error: 'User not found'
+            }
+        } else if (!['in progress', 'completed', 'dropped'].includes(status)) {
+            return {
+                success: false,
+                error: 'Invalid status'
+            }
+        }
+        const res = await TaskModel.findOneAndUpdate({ _id: taskId, uId: user.sub }, { status }).exec();
+        return (res !== null);
+    } catch(error) {
+        console.log('Task Update Error: ', error)
+        return {
+            success: false,
+            error: error
+        }
+    }
+}

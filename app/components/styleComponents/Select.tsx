@@ -3,13 +3,14 @@
 import { StyleContext } from "@/app/StyleContext";
 import { useContext } from "react";
 
-export default function Select({ name, options, variant, style, defaultValue, className } : {
+export default function Select({ name, options, variant, style, defaultValue, className, onChange } : {
     name?: string;
     options: string[];
     variant?: "primary" | "secondary" | "tertiary" | 'basic';
     style?: React.CSSProperties;
     defaultValue?: string;
     className?: string;
+    onChange?: React.ChangeEventHandler<HTMLSelectElement>;
 }) {
     const [theme, ] = useContext(StyleContext);
     const variantStyles = {
@@ -30,8 +31,8 @@ export default function Select({ name, options, variant, style, defaultValue, cl
         } 
     }
     return (
-        <select name={name} style={{...variantStyles[variant ?? 'basic'], ...style}} defaultValue={defaultValue} className={`p-2 rounded-sm w-full ${className}`}>
-            {options.map((option, index) => <option key={index} value={option}>{option}</option>)}
+        <select name={name} style={{...variantStyles[variant ?? 'basic'], ...style}} defaultValue={defaultValue} className={`p-2 rounded-sm w-full ${className}`} onChange={onChange}>
+            {options.map(option => <option key={option} value={option}>{option}</option>)}
         </select>
     )
 }
