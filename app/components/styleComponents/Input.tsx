@@ -3,7 +3,7 @@
 import { StyleContext } from "@/app/StyleContext";
 import React, { useContext } from "react";
 
-export default function Input({ name, type, required, placeholder, className, variant, style, multiline, maxLength, label, value, onChange, onKeyDown }: {
+export default function Input({ name, type, required, placeholder, className, variant, style, multiline, maxLength, label, value, defaultValue, onChange, onKeyDown }: {
     name?: string;
     type?: React.HTMLInputTypeAttribute;
     required?: boolean;
@@ -15,6 +15,7 @@ export default function Input({ name, type, required, placeholder, className, va
     maxLength?: number;
     label?: string;
     value?: string | number | readonly string[];
+    defaultValue?: string | number | readonly string[];
     onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
     onKeyDown?: React.KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 }) {
@@ -41,10 +42,10 @@ export default function Input({ name, type, required, placeholder, className, va
     }
     if(multiline) {
         return (
-            <textarea value={value} aria-label={label} name={name} maxLength={maxLength} required={required} className={`${className ?? ''} appearance-none`} placeholder={placeholder} style={{...variantStyles[variant ?? 'basic'], ...style}} onChange={onChange} onKeyDown={onKeyDown}/>
+            <textarea value={value} aria-label={label} defaultValue={defaultValue} name={name} maxLength={maxLength} required={required} className={`${className ?? ''} appearance-none`} placeholder={placeholder} style={{...variantStyles[variant ?? 'basic'], ...style}} onChange={onChange} onKeyDown={onKeyDown}/>
         )
     }
     return (
-        <input aria-label={label} value={value} name={name} maxLength={maxLength} type={type} required={required} className={`${className ?? ''}`} placeholder={placeholder} style={{...variantStyles[variant ?? 'basic'], ...style}} onChange={onChange} onKeyDown={onKeyDown}/>
+        <input aria-label={label} defaultValue={defaultValue} value={value} name={name} maxLength={maxLength} type={type} required={required} className={`${className ?? ''}`} placeholder={placeholder} style={{...variantStyles[variant ?? 'basic'], ...style}} onChange={onChange} onKeyDown={onKeyDown}/>
     )
 }

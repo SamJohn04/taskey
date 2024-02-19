@@ -3,8 +3,6 @@ import { getTaskById, updateTaskTags } from "@/app/mongo/Controller/taskControll
 import ImportantMarker from "../../components/tasks/ImportantMarker";
 import { getDateTimeMessage } from "@/app/utils/utils";
 import Span from "@/app/components/styleComponents/Span";
-import Tag from "@/app/components/Tag";
-import AddTag from "../../components/tasks/AddTag";
 import TaskStatus from "@/app/components/tasks/task/TaskStatus";
 import Tags from "@/app/components/tasks/task/Tags";
 

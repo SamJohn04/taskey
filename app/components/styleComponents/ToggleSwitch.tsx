@@ -3,9 +3,10 @@
 import { StyleContext } from "@/app/StyleContext";
 import { useContext, useRef } from "react";
 
-export default function ToggleSwitch({variant, onChange}: {
+export default function ToggleSwitch({variant, onChange, value}: {
     variant?: "primary" | "secondary" | "tertiary";
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
+    value?: boolean;
 }) {
     const inputRef = useRef<HTMLInputElement>(null);
     const [theme, ] = useContext(StyleContext);
@@ -28,7 +29,7 @@ export default function ToggleSwitch({variant, onChange}: {
     }
     return (
         <div className="relative flex toggle-switch cursor-pointer">
-            <input type="checkbox" className="appearance-none h-5 w-16 rounded-full cursor-pointer" onChange={onChange} ref={inputRef} style={variantStyles[variant ?? 'primary']}/>
+            <input type="checkbox" className="appearance-none h-5 w-16 rounded-full cursor-pointer" onChange={onChange} ref={inputRef} style={variantStyles[variant ?? 'primary']} checked={value}/>
             <div className="w-4 h-4 rounded-full absolute top-1/2 left-1 -translate-y-1/2 transition-all" style={{backgroundColor: theme?.colors?.text}} onClick={() => inputRef.current?.click() }/>
         </div>
     )

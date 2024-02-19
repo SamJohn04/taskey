@@ -44,7 +44,7 @@ export default function TaskCard({ task, compact } : { task: Task, compact?: boo
                 await updateTaskStatus(task._id, task.status === 'completed' ? 'in progress' : 'completed');
                 setStatus(task.status === 'completed' ? 'in progress' : 'completed');
                 setLoading(false);
-            }}>{status === 'completed' ? <RemoveCheck hoverColor={loading ? 'textMuted' : 'danger'}/> : <Check hoverColor={loading ? 'textMuted' : 'success'}/>}</button><button disabled={loading} className="hover:scale-95 active:scale-95" onClick={async (event) => {
+            }} title={status === 'completed' ? 'Mark as In Progress' : 'Mark as Completed'}>{status === 'completed' ? <RemoveCheck hoverColor={loading ? 'textMuted' : 'danger'}/> : <Check hoverColor={loading ? 'textMuted' : 'success'}/>}</button><button disabled={loading} className="hover:scale-95 active:scale-95" onClick={async (event) => {
                 event.preventDefault();
                 event.stopPropagation();
                 if(!task._id) {
@@ -54,7 +54,7 @@ export default function TaskCard({ task, compact } : { task: Task, compact?: boo
                 await updateTaskStatus(task._id, task.status === 'dropped' ? 'in progress' : 'dropped');
                 setStatus(task.status === 'dropped' ? 'in progress' : 'dropped');
                 setLoading(false);
-            }}>{status === 'dropped' ? <Undo hoverColor={loading ? 'textMuted' : 'success'}/> : <Delete hoverColor={loading ? 'textMuted' : 'danger'}/>}</button></Span>
+            }} title={status === 'dropped' ? 'Mark as In Progress' : "Mark as dropped"}>{status === 'dropped' ? <Undo hoverColor={loading ? 'textMuted' : 'success'}/> : <Delete hoverColor={loading ? 'textMuted' : 'danger'}/>}</button></Span>
             {!compact && <div className="col-start-2 col-span-7 flex gap-2 py-2 overflow-hidden" >{task.tags?.slice(0, 5).map((tag, index) => <Tag key={index} hideClose><span className="text-nowrap truncate w-full">{tag}</span></Tag>)}</div>}
         </div>
     )
