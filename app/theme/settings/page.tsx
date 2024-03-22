@@ -6,6 +6,8 @@ import Button from "@/app/components/styleComponents/Button";
 import Input from "@/app/components/styleComponents/Input";
 import { createTheme } from "@/app/mongo/Controller/themeController";
 import { Theme } from "@/app/mongo/Model/themeModel";
+import { Check } from "@mui/icons-material";
+import { Alert } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 
 function opacityToHex(opacity: string) {
@@ -18,8 +20,9 @@ function opacityToRange(opacity?: string) {
 
 export default function DesignSettings() {
     const [theme, setTheme] = useContext(StyleContext);
+    const [loading, setLoading] = useState(false);
     const [originalTheme, setOriginalTheme] = useState<Theme | null>(null);
-    const [name, setName] = useState('default');
+    const [showThemeSaved, setShowThemeSaved] = useState(false);
     useEffect(() => {
         if(!originalTheme) {
             setOriginalTheme(theme);
@@ -32,8 +35,18 @@ export default function DesignSettings() {
 
     const handleSaveTheme = async () => {
         setOriginalTheme(theme);
-        if(theme)
-            await createTheme(theme, name);
+        setLoading(true);
+        if(theme) {
+            const res = await createTheme(theme);
+            if(res.success) {
+                setShowThemeSaved(true);
+                setTimeout(() => {
+                    setShowThemeSaved(false);
+                }, 5000)
+            
+            }
+        }
+        setLoading(false);
     }
     if(!theme) {
         return <div>Loading...</div>
@@ -41,8 +54,6 @@ export default function DesignSettings() {
     return (
         <main className="mt-20 mb-10 flex justify-center items-start">
             <Box className="p-6 py-12 md:p-12 flex flex-col gap-8 w-[95vw] max-w-5xl">
-                <div className="flex items-center gap-4 justify-between"><span >Name:</span><Input className="p-2 rounded-sm w-2/3" value={name} onChange={(e) => setName(e.target.value)} variant="primary" placeholder="Theme Name" label="Theme Name"/></div>
-                <hr />
                 <h2 className="text-xl">Colors</h2>
                 <div className="grid grid-cols-4 gap-4 items-center">
                     <span>Neutral</span>
@@ -78,7 +89,10 @@ export default function DesignSettings() {
                     <Button variant="tertiary" className="hover:scale-95 active:scale-95 justify-center items-center">Tertiary Button</Button>
                     <Button variant="tertiary-active" className="hover:scale-95 active:scale-95 justify-center items-center">Active Button</Button>
                 </div>
-                <Button onClick={handleSaveTheme} className="justify-center hover:scale-95 active:scale-95 rounded">Save Theme</Button>
+                <Button onClick={handleSaveTheme} className="justify-center hover:scale-95 active:scale-95 rounded" disabled={loading}>Save Theme</Button>
+                <Alert className={`absolute bottom-2 w-[50vw] ${showThemeSaved ? '' : 'hidden'}`} icon={<Check fontSize="inherit" />} severity="success">
+                    Theme Saved!
+                </Alert>
             </Box>
         </main>
     )

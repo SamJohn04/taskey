@@ -42,7 +42,6 @@ export default function Navbar() {
             <header className="md:mt-5 w-full md:w-4/5 relative md:sticky md:top-2 m-auto z-20"><Box className="p-2 py-1 bg-primary/20 rounded-md shadow-md">
                 <nav className="w-full min-h-10 flex items-stretch">
                     <Link href='/' className="px-4 flex items-center gap-2">
-                        <img className="w-10 h-10 rounded-full" src="/next.svg" alt="TasKey" />
                         <h1 className="text-xl font-bold">TasKey</h1>
                     </Link>
                     <div className="w-full flex justify-end px-8">
@@ -62,7 +61,6 @@ export default function Navbar() {
             <header className="md:mt-5 w-full md:w-4/5 relative md:sticky md:top-2 m-auto z-20"><Box className="p-2 py-1 bg-primary/20 rounded-md shadow-md">
                 <nav className="w-full min-h-10 flex items-stretch">
                     <Link href='/' className="px-4 flex items-center gap-2">
-                        <img className="w-10 h-10 rounded-full" src="/next.svg" alt="TasKey" />
                         <h1 className="text-xl font-bold">TasKey</h1>
                     </Link>
                     <div className="w-full flex justify-between px-8">
@@ -77,7 +75,6 @@ export default function Navbar() {
             <nav className="min-h-10 max-md:h-full flex flex-col md:flex-row items-center md:items-stretch">
                 <div className="w-full flex items-center max-md:justify-between md:w-auto relative">
                     <Link href='/' className="px-4 flex items-center gap-2">
-                        <img className="w-10 h-10 rounded-full" src="/next.svg" alt="TasKey" />
                         <h1 className="text-xl font-bold">TasKey</h1>
                     </Link>
                     <div className="flex"><div className="md:hidden">

@@ -4,7 +4,7 @@ import { getSession } from "@auth0/nextjs-auth0";
 import themeModel, { Theme } from "../Model/themeModel";
 import { connectDB } from "../database";
 
-export async function createTheme(theme: Theme, themeName: string): Promise<{ success: true } | { success: false, error: unknown }> {
+export async function createTheme(theme: Theme): Promise<{ success: true } | { success: false, error: unknown }> {
     const { user } = (await getSession()) ?? {};
     if (!user) {
         return {
@@ -22,68 +22,12 @@ export async function createTheme(theme: Theme, themeName: string): Promise<{ su
     } 
 
     try {
-        await themeModel.updateOne({uId: user?.sub, name: themeName}, {...theme, uId: user?.sub, name: themeName}, {upsert: true}).exec();
+        await themeModel.updateOne({uId: user?.sub}, {...theme, uId: user?.sub}, {upsert: true}).exec();
         return {
             success: true,
         }
     } catch(error) {
         console.log('Default Theme Create Error: ', error)
-        return {
-            success: false,
-            error: error
-        }
-    }
-}
-
-export async function getAllThemes():Promise<{ success: false, error: unknown } | { success: true, themes: Theme[] }> {
-    const { user } = (await getSession()) ?? {};
-    if (!user) {
-        return {
-            success: false,
-            error: 'User not found'
-        }
-    }
-
-    const { success, connection, error } = await connectDB();
-    if (!success) {
-        return {
-            success: false,
-            error: error
-        }
-    }
-
-    try {
-        let themes = await themeModel.find({uId: user.sub}).exec();
-        themes = themes.map((theme) => ({
-            name: theme.name,
-            colors: {
-                background: theme.colors.background,
-                primary: theme.colors.primary,
-                secondary: theme.colors.secondary,
-                text: theme.colors.text,
-                textMuted: theme.colors.textMuted,
-                textEmphasis: theme.colors.textEmphasis,
-                neutral: theme.colors.neutral,
-                danger: theme.colors.danger,
-                success: theme.colors.success,
-                warning: theme.colors.warning
-            },
-            background: {
-                body: theme.background.body,
-                button: theme.background.button
-            },
-            transparency: {
-                box: theme.transparency.box,
-                input: theme.transparency.input
-            },
-            _id: theme._id.toString(),
-        }))
-        return {
-            success: true,
-            themes: themes
-        }
-    } catch(error) {
-        console.log('Theme Get Error: ', error)
         return {
             success: false,
             error: error
@@ -109,7 +53,7 @@ export async function getTheme():Promise<{ success: false, error: unknown } | { 
     } 
 
     try {
-        const themeResult = await themeModel.findOne({uId: user.sub}, {}, {sort: {createdAt: -1}}).exec();
+        const themeResult = await themeModel.findOne({uId: user.sub}).exec();
         const theme = {
             colors: {
                 background: themeResult.colors.background,
@@ -138,37 +82,6 @@ export async function getTheme():Promise<{ success: false, error: unknown } | { 
         }
     } catch(error) {
         console.log('Theme Get Error: ', error)
-        return {
-            success: false,
-            error: error
-        }
-    }
-}
-
-export async function deleteTheme(themeId: string):Promise<{ success: true } | { success: false, error: unknown }> {
-    const { user } = (await getSession()) ?? {};
-    if (!user) {
-        return {
-            success: false,
-            error: 'User not found'
-        }
-    }
-
-    const { success, connection, error } = await connectDB();
-    if (!success) {
-        return {
-            success: false,
-            error: error
-        }
-    } 
-
-    try {
-        await themeModel.deleteOne({_id: themeId, uId: user.sub}).exec();
-        return {
-            success: true,
-        }
-    } catch(error) {
-        console.log('Theme Delete Error: ', error)
         return {
             success: false,
             error: error
