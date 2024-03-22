@@ -19,7 +19,7 @@ export default async function EditTaskPage({ params }: { params: { id: string } 
         <main className="flex justify-center items-start mt-20">
             <Box className="my-4 p-6 py-12 md:p-12 flex flex-col gap-16 w-[95vw] max-w-5xl">
                 <h1 className="w-full max-w-6xl mx-auto text-2xl md:text-3xl font-semibold">Editing Task {task.title}</h1>
-                <Form />
+                <Form editingId={params.id} defaultValues={task} isEditing/>
             </Box>
         </main>
     )

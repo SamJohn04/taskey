@@ -5,13 +5,27 @@ import { connectDB } from "../database";
 import { getSession } from "@auth0/nextjs-auth0";
 
 export async function createTask(task: Task): Promise<{ success: true } | { success: false, error: unknown }> {
+    const { user } = (await getSession()) ?? {};
+    if (!user) {
+        return {
+            success: false,
+            error: 'User not found'
+        }
+    } else if (user.sub !== task.uId) {
+        return {
+            success: false,
+            error: 'User not found'
+        }
+    }
+
     const { success, connection, error } = await connectDB();
     if (!success) {
         return {
             success: false,
             error: error
         }
-    }
+    } 
+
     try {
         const newTask = await TaskModel.create(task);
         console.log(newTask);
@@ -28,25 +42,28 @@ export async function createTask(task: Task): Promise<{ success: true } | { succ
 }
 
 export async function getTasks(): Promise<{success: false, error: unknown} | {success: true, tasks: Task[]}> {
-    const { success, connection, error } = await connectDB();
     const { user } = (await getSession()) ?? {};
-    if (!success) {
-        return {
-            success: false,
-            error: error
-        }
-    } else if (!user) {
+    if (!user) {
         return {
             success: false,
             error: 'User not found'
         }
     }
+
+    const { success, connection, error } = await connectDB();
+    if (!success) {
+        return {
+            success: false,
+            error: error
+        }
+    } 
+
     try {
         const tasks: Task[] = (await TaskModel.find({uId: user.sub}).exec()).toSorted((a: Task, b: Task) => {
-            if(a.status === 'completed' && b.status !== 'completed') {
+            if((b.status === 'in progress' && a.status !== 'in progress')) {
                 return 1;
             }
-            if(a.status !== 'completed' && b.status === 'completed') {
+            if(b.status !== 'in progress' && a.status === 'in progress') {
                 return -1;
             }
             if(a.important && !b.important) {
@@ -88,20 +105,22 @@ export async function getTasks(): Promise<{success: false, error: unknown} | {su
 }
 
 export async function updateTaskImportant(taskId: string, important: boolean) {
-    const { success, connection, error } = await connectDB();
-    try {
-        const { user } = (await getSession()) ?? {};
-        if (!success) {
-            return {
-                success: false,
-                error: error
-            }
-        } else if (!user) {
-            return {
-                success: false,
-                error: 'User not found'
-            }
+    const { user } = (await getSession()) ?? {};
+    if (!user) {
+        return {
+            success: false,
+            error: 'User not found'
         }
+    }
+
+    const { success, connection, error } = await connectDB();
+    if (!success) {
+        return {
+            success: false,
+            error: error
+        }
+    } 
+    try {
         const res = await TaskModel.findOneAndUpdate({ _id: taskId, uId: user.sub }, { important }).exec();
         return (res !== null);
     } catch(error) {
@@ -120,21 +139,22 @@ export async function getTaskById(taskId: string): Promise<{
     success: true,
     task: Task
 }> {
-    const { success, connection, error } = await connectDB();
-    try {
-        const { user } = (await getSession()) ?? {};
-        if (!success) {
-            return {
-                success: false,
-                error: error
-            }
-        } else if (!user) {
-            return {
-                success: false,
-                error: 'User not found'
-            }
+    const { user } = (await getSession()) ?? {};
+    if (!user) {
+        return {
+            success: false,
+            error: 'User not found'
         }
+    }
 
+    const { success, connection, error } = await connectDB();
+    if (!success) {
+        return {
+            success: false,
+            error: error
+        }
+    } 
+    try {
         const task = await TaskModel.findById(taskId).exec();
         if(task.uId !== user.sub) {
             return {
@@ -169,20 +189,22 @@ export async function getTaskById(taskId: string): Promise<{
 }
 
 export async function updateTaskTags(taskId: string, tags: string[]) {
-    const { success, connection, error } = await connectDB();
-    try {
-        const { user } = (await getSession()) ?? {};
-        if (!success) {
-            return {
-                success: false,
-                error: error
-            }
-        } else if (!user) {
-            return {
-                success: false,
-                error: 'User not found'
-            }
+    const { user } = (await getSession()) ?? {};
+    if (!user) {
+        return {
+            success: false,
+            error: 'User not found'
         }
+    }
+
+    const { success, connection, error } = await connectDB();
+    if (!success) {
+        return {
+            success: false,
+            error: error
+        }
+    } 
+    try {
         const res = await TaskModel.findOneAndUpdate({ _id: taskId, uId: user.sub }, { tags }).exec();
         return (res !== null);
     } catch(error) {
@@ -196,14 +218,15 @@ export async function updateTaskTags(taskId: string, tags: string[]) {
 
 export async function updateTaskStatus(taskId: string, status: string) {
     const { success, connection, error } = await connectDB();
+    if (!success) {
+        return {
+            success: false,
+            error: error
+        }
+    }
     try {
         const { user } = (await getSession()) ?? {};
-        if (!success) {
-            return {
-                success: false,
-                error: error
-            }
-        } else if (!user) {
+        if (!user) {
             return {
                 success: false,
                 error: 'User not found'
@@ -248,6 +271,35 @@ export async function updateTaskStatus(taskId: string, status: string) {
         return {
             success: false,
             error: error
+        }
+    }
+}
+
+export async function updateTaskById(taskId: string, updatedTask: Task) {
+    const { user } = (await getSession()) ?? {};
+    if (!user || user.sub !== updatedTask.uId) {
+        return {
+            success: false,
+            error: 'User not found'
+        }
+    }
+    try {
+        const { success, connection, error } = await connectDB();
+        if(!success) {
+            return {
+                success: false,
+                error: error
+            }
+        }
+
+        await TaskModel.findByIdAndUpdate(taskId, updatedTask).exec();
+        return {
+            success: true
+        };
+    } catch {
+        return {
+            success: false,
+            error: 'Task not found'
         }
     }
 }

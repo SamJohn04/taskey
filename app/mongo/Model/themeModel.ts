@@ -1,17 +1,19 @@
 import { Schema, model, models } from "mongoose";
 
 export type Theme = {
+    uId?: string;
+    _id?: string;
     colors: {
         background: string;
         primary: string;
-        secondary?: string;
+        secondary: string;
         text: string;
-        textMuted?: string;
-        textEmphasis?: string;
-        neutral?: string;
-        danger?: string;
-        success?: string;
-        warning?: string;
+        textMuted: string;
+        textEmphasis: string;
+        neutral: string;
+        danger: string;
+        success: string;
+        warning: string;
     }, background?: {
         body?: string;
         button?: string;
@@ -26,7 +28,6 @@ export const themeSchema = new Schema({
         type: String,
         required: true
     },
-    name: String,
     colors: {
         type: {
             primary: String,
@@ -50,10 +51,6 @@ export const themeSchema = new Schema({
         body: String,
         button: String
     },
-    isDefault: {
-        type: Boolean,
-        default: false
-    }
 }, {
     timestamps: true
 })

@@ -34,10 +34,3 @@ body {
 .toggle-switch > input:checked +  div {
   translate: 2.5rem;
 }
-
-@media (max-width: 768px) {
-  #user-card {
-    backdrop-filter: none;
-    background: transparent !important;
-  }
-}

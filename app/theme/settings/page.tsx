@@ -62,14 +62,14 @@ export default function DesignSettings() {
                 <hr/>
                 <h2 className="text-xl">Opacity</h2>
                 <div className="grid grid-cols-4 gap-4">
-                    <span>Box</span><Input label="Box Opacity" type="range" className="col-span-3 w-full" value={opacityToRange(theme?.transparency?.box)} onChange={(e) => setTheme && setTheme({...theme, transparency: {...theme.transparency, box: opacityToHex(e.target.value)}})} />
-                    <span>Input</span><Input label="Input Opacity" type="range" className="col-span-3 w-full" value={opacityToRange(theme?.transparency?.input)} onChange={(e) => setTheme && setTheme({...theme, transparency: {...theme.transparency, input: opacityToHex(e.target.value)}})} />
+                    <span>Box</span><input aria-label="Box Opacity" type="range" className="col-span-3 w-full" min={"0"} defaultValue={opacityToRange(theme?.transparency?.box)} onChange={(e) => setTheme && setTheme({...theme, transparency: {...theme.transparency, box: opacityToHex(e.target.value)}})} />
+                    <span>Input</span><input aira-label="Input Opacity" type="range" className="col-span-3 w-full" defaultValue={opacityToRange(theme?.transparency?.input)} onChange={(e) => setTheme && setTheme({...theme, transparency: {...theme.transparency, input: opacityToHex(e.target.value)}})} />
                 </div>
                 <hr/>
                 <h2 className="text-xl">Background</h2>
                 <div className="grid grid-cols-4 gap-4">
-                    <span>Background Color</span><Input label="Background Color" type="color" className="col-span-3 w-full rounded-sm" value={theme?.colors?.background} onChange={(e) => setTheme && setTheme({...theme, colors: {...theme.colors, background: e.target.value}})} />
-                    <span>Background Image</span><Input label="Background Image" type="url" className="col-span-3 w-full p-2 rounded-sm" value={theme?.background?.body} onChange={(e) => setTheme && setTheme({...theme, background: {...theme.background, body: e.target.value}})} />
+                    <span>Background Color</span><Input label="Background Color" type="color" className="col-span-3 w-full rounded-sm" value={theme?.colors?.background ?? '#FFF'} onChange={(e) => setTheme && setTheme({...theme, colors: {...theme.colors, background: e.target.value}})} />
+                    <span>Background Image</span><Input label="Background Image" type="url" className="col-span-3 w-full p-2 rounded-sm" value={theme?.background?.body ?? ''} onChange={(e) => setTheme && setTheme({...theme, background: {...theme.background, body: e.target.value}})} />
                 </div>
                 <hr/>
                 <div className="grid grid-cols-4 gap-4">
