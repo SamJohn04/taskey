@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <UserProvider>
-        <StyleProvider getThemeAction = { getThemeAction } themeName="lightBlue">
+        <StyleProvider getThemeAction = { getThemeAction }>
           <Body className={poppins.className}>
             <Navbar />
             {children}

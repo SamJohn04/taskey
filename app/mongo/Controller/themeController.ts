@@ -54,6 +54,12 @@ export async function getTheme():Promise<{ success: false, error: unknown } | { 
 
     try {
         const themeResult = await themeModel.findOne({uId: user.sub}).exec();
+        if(!themeResult) {
+            return {
+                success: false,
+                error: 'Theme not found'
+            }
+        }
         const theme = {
             colors: {
                 background: themeResult.colors.background,

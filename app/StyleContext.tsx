@@ -39,14 +39,12 @@ export const themes: Record<string, Theme> = {
 
 export const StyleContext = createContext<[Theme | null, Dispatch<SetStateAction<Theme>> | null]>([null, null]);
 
-export default function StyleProvider({ children, themeName, theme, getThemeAction } : { children: React.ReactNode | React.ReactNode[], themeName?: keyof typeof themes, theme?: Theme, getThemeAction?: () => Promise<Theme | null> }) {
-    const [currentTheme, setTheme] = useState<Theme>(theme ?? themes[themeName ?? 'lightBlue']);
+export default function StyleProvider({ children, theme, getThemeAction } : { children: React.ReactNode | React.ReactNode[], theme?: Theme, getThemeAction?: () => Promise<Theme | null> }) {
+    const [currentTheme, setTheme] = useState<Theme>(theme ?? themes['lightBlue']);
     useEffect(() => {
         if(getThemeAction) {
             getThemeAction().then((res) => {
-               if(res) {
-                setTheme(res);
-               }
+               setTheme(res ?? theme ?? themes['lightBlue']);
             })
         }
     }, [])
