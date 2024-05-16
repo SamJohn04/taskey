@@ -6,6 +6,7 @@ import Span from "@/app/components/styleComponents/Span";
 import TaskStatus from "@/app/components/tasks/task/TaskStatus";
 import Tags from "@/app/components/tasks/task/Tags";
 import Link from "next/link";
+import { Edit } from "@mui/icons-material";
 
 export default async function Task({ params }: { params: { id: string } }) {
     const result = await getTaskById(params.id);
@@ -32,9 +33,9 @@ export default async function Task({ params }: { params: { id: string } }) {
     }
     return (
         <main className="mt-20 flex justify-center items-start">
-            <Box className="p-3 py-12 md:p-12 flex flex-col gap-8 w-[97vw] max-w-5xl">
+            <Box className="p-3 py-4 md:p-8 flex flex-col gap-8 w-[97vw] max-w-5xl">
                 <div>
-                    <h1 className="text-2xl font-semibold w-full flex justify-between items-center">{task.title}<div className="flex gap-2 items-center"><Link href={`/tasks/edit/${params.id}`}>Edit</Link><ImportantMarker _id={task._id ?? ''} important={task.important ?? false}/></div></h1>
+                    <h1 className="text-2xl font-semibold w-full flex justify-between items-center capitalize">{task.title}<div className="flex gap-2 items-center"><Link href={`/tasks/edit/${params.id}`}><Edit /></Link><ImportantMarker _id={task._id ?? ''} important={task.important ?? false}/></div></h1>
                     <div className="text-sm">{task.status === 'completed' ? <Span>Completed: {String(task.completedAt)}</Span> : <><Span variant="textMuted">Created: {createdAtMessage}</Span> | <Span variant={ task.dueAt ? task.dueAt.getTime() > new Date().getTime() ? 'success' : 'danger' : 'textMuted' }>Due Date: {dueAtMessage}</Span></>}</div>
                 </div>
                 <Tags task={task} getTagCloseHandler={getTagCloseHandler}/>

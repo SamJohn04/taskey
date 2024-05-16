@@ -55,7 +55,7 @@ export default function DesignSettings() {
         <main className="mt-20 mb-10 flex justify-center items-start">
             <Box className="p-6 py-12 md:p-12 flex flex-col gap-8 w-[95vw] max-w-5xl">
                 <h2 className="text-xl">Colors</h2>
-                <div className="grid grid-cols-4 gap-4 items-center">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 place-items-center">
                     <span>Neutral</span>
                     <Input label="Neutral Color" type="color" className="" value={theme?.colors?.neutral} onChange={(e) => setTheme && setTheme({...theme, colors: {...theme.colors, neutral: e.target.value}})} />
                     <span>Primary</span>
@@ -78,16 +78,16 @@ export default function DesignSettings() {
                 </div>
                 <hr/>
                 <h2 className="text-xl">Background</h2>
-                <div className="grid grid-cols-4 gap-4">
+                <div className="grid md:grid-cols-4 gap-4">
                     <span>Background Color</span><Input label="Background Color" type="color" className="col-span-3 w-full rounded-sm" value={theme?.colors?.background ?? '#FFF'} onChange={(e) => setTheme && setTheme({...theme, colors: {...theme.colors, background: e.target.value}})} />
                     <span>Background Image</span><Input label="Background Image" type="url" className="col-span-3 w-full p-2 rounded-sm" value={theme?.background?.body ?? ''} onChange={(e) => setTheme && setTheme({...theme, background: {...theme.background, body: e.target.value}})} />
                 </div>
                 <hr/>
-                <div className="grid grid-cols-4 gap-4">
-                    <Button variant="primary" className="hover:scale-95 active:scale-95 justify-center items-center">Primary Button</Button>
-                    <Button variant="secondary" className="hover:scale-95 active:scale-95 justify-center items-center">Secondary Button</Button>
-                    <Button variant="tertiary" className="hover:scale-95 active:scale-95 justify-center items-center">Tertiary Button</Button>
-                    <Button variant="tertiary-active" className="hover:scale-95 active:scale-95 justify-center items-center">Active Button</Button>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 place-items-center">
+                    <Button variant="primary" className="hover:scale-95 active:scale-95 justify-center items-center">Primary</Button>
+                    <Button variant="secondary" className="hover:scale-95 active:scale-95 justify-center items-center">Secondary</Button>
+                    <Button variant="tertiary" className="hover:scale-95 active:scale-95 justify-center items-center">Tertiary</Button>
+                    <Button variant="tertiary-active" className="hover:scale-95 active:scale-95 justify-center items-center">Active</Button>
                 </div>
                 <Button onClick={handleSaveTheme} className="justify-center hover:scale-95 active:scale-95 rounded" disabled={loading}>Save Theme</Button>
                 <Alert className={`absolute bottom-2 w-[50vw] ${showThemeSaved ? '' : 'hidden'}`} icon={<Check fontSize="inherit" />} severity="success">

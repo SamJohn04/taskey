@@ -28,7 +28,7 @@ export default function TasksView({tasks} : { tasks: Task[] }) {
         } else {
             return tasks;
         }
-    }, [params])
+    }, [tasks, params])
 
     return (
         <>
@@ -36,7 +36,7 @@ export default function TasksView({tasks} : { tasks: Task[] }) {
                 <div className="flex items-center gap-2">Expand View: <ToggleSwitch variant="primary" onChange={(event) => {setExpand(event.target.checked)}}/></div>
                 <Link href='/tasks/new'><Button className="rounded-md hover:scale-95 active:scale-95">New Task</Button></Link>
             </div>
-            <div className="w-full md:hidden"><Button variant="tertiary-active" className="w-full items-center justify-center active:scale-95 font-semibold" onClick={() => setShowNav(val => !val)}>Filter Tasks</Button></div>
+            <div className="w-full md:hidden"><Button variant="tertiary" className="w-full items-center justify-center active:scale-95 font-semibold" onClick={() => setShowNav(val => !val)}>Filter Tasks</Button></div>
             <TaskNav showNav={showNav} setShowNav={setShowNav}/>
             <div className="col-span-3 w-[95dvw] md:w-auto"><TaskList tasks={filteredTasks} compact={!expand}/></div>
         </>
