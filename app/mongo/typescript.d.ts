@@ -1,5 +1,5 @@
 declare global {
-    var _connectionPromise: Promise<any>;
+    var _connectionPromise: Promise<typeof import("mongoose")>;
 }
 
 export {}

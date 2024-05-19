@@ -6,6 +6,7 @@ import Button from "@/app/components/styleComponents/Button";
 import Input from "@/app/components/styleComponents/Input";
 import { createTheme } from "@/app/mongo/Controller/themeController";
 import { Theme } from "@/app/mongo/Model/themeModel";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import { Check } from "@mui/icons-material";
 import { Alert } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
@@ -22,7 +23,8 @@ export default function DesignSettings() {
     const [theme, setTheme] = useContext(StyleContext);
     const [loading, setLoading] = useState(false);
     const [originalTheme, setOriginalTheme] = useState<Theme | null>(null);
-    const [showThemeSaved, setShowThemeSaved] = useState(false);
+    const [showThemeSavedMessage, setShowThemeSavedMessage] = useState(false);
+    const { user, isLoading } = useUser();
     useEffect(() => {
         if(!originalTheme) {
             setOriginalTheme(theme);
@@ -39,9 +41,9 @@ export default function DesignSettings() {
         if(theme) {
             const res = await createTheme(theme);
             if(res.success) {
-                setShowThemeSaved(true);
+                setShowThemeSavedMessage(true);
                 setTimeout(() => {
-                    setShowThemeSaved(false);
+                    setShowThemeSavedMessage(false);
                 }, 5000)
             
             }
@@ -89,10 +91,13 @@ export default function DesignSettings() {
                     <Button variant="tertiary" className="hover:scale-95 active:scale-95 justify-center items-center">Tertiary</Button>
                     <Button variant="tertiary-active" className="hover:scale-95 active:scale-95 justify-center items-center">Active</Button>
                 </div>
-                <Button onClick={handleSaveTheme} className="justify-center hover:scale-95 active:scale-95 rounded" disabled={loading}>Save Theme</Button>
-                <Alert className={`absolute bottom-2 w-[50vw] ${showThemeSaved ? '' : 'hidden'}`} icon={<Check fontSize="inherit" />} severity="success">
-                    Theme Saved!
-                </Alert>
+                { !isLoading && user && <Button onClick={handleSaveTheme} className="justify-center hover:scale-95 active:scale-95 rounded" disabled={loading}>Save Theme</Button> }
+                {
+                    showThemeSavedMessage &&
+                    <Alert className='absolute bottom-2 w-[50vw]' icon={<Check fontSize="inherit" />} severity="success">
+                        Theme Saved!
+                    </Alert>
+                }
             </Box>
         </main>
     )
